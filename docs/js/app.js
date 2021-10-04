@@ -2,7 +2,7 @@
 
 //const crowdsaleContract = new web3.eth.Contract(crowdsale_abi, crowdsaleAddress)
 App = {
-  web3Provider: null,
+  //web3Provider: null,
   contracts: {},
   account: '0x0',
   loading: false,
@@ -22,6 +22,7 @@ App = {
   },
 
   initWeb3: function() {
+    /**
     if (typeof web3 !== 'undefined') {
       // If a web3 instance is already provided by Meta Mask.
       App.web3Provider = web3.currentProvider;
@@ -31,14 +32,16 @@ App = {
       App.web3Provider = new Web3.providers.HttpProvider('https://http-testnet.hecochain.com');
       web3 = new Web3(App.web3Provider);
     }
+    **/
+    web3 = new Web3('https://http-testnet.hecochain.com');
     return App.initContracts();
   },
 
   initContracts: function() {
-    App.contracts.RFXTokenSale = new web3.eth.Contract(crowdsale_abi, crowdsaleAddress);
+    App.contracts.RFXTokenSale = new web3.eth.Contract(App.crowdsale_abi, App.crowdsaleAddress);
     App.contracts.RFXTokenSale.setProvider(App.web3Provider);
     console.log("RFX Token Sale Address:", App.crowdsaleAddress);
-    App.contracts.RFXToken = new web3.eth.Contract(rfx_abi, rfxTokenAddress);
+    App.contracts.RFXToken = new web3.eth.Contract(App.rfx_abi, App.rfxTokenAddress);
     App.contracts.RFXToken.setProvider(App.web3Provider);
     console.log("RFX Token Address:", App.rfxTokenAddress);
     
@@ -48,7 +51,7 @@ App = {
 
   // Listen for events emitted from the contract
   listenForEvents: function() {
-    App.contracts.DappTokenSale.Sell({}, {
+    App.contracts.RFXTokenSale.Sell({}, {
       fromBlock: 0,
       toBlock: 'latest',
     }).watch(function(error, event) {
