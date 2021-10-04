@@ -79,29 +79,24 @@ App = {
 
     // Load token sale contract
     rfxTokenSaleInstance = App.contracts.RFXTokenSale;
-    return rfxTokenSaleInstance.methods.rate();
-    }).then(function(rate) {
-      App.tokenPrice = 10**18 / rate;
-      $('.token-price').html(web3.fromWei(App.tokenPrice, "ether").toNumber());
-      return rfxTokenSaleInstance.methods.totalSold();
-    }).then(function(totalSold) {
-      App.tokensSold = totalSold;
-      $('.tokens-sold').html(web3.fromWei(App.tokensSold, "ether").toNumber());
-      $('.tokens-available').html(App.tokensAvailable);
-
-      var progressPercent = (Math.ceil(App.tokensSold) / App.tokensAvailable) * 100;
-      $('#progress').css('width', progressPercent + '%');
+    Rate = rfxTokenSaleInstance.methods.rate();
+    App.tokenPrice = 10**18 / Rate;
+    $('.token-price').html(web3.fromWei(App.tokenPrice, "ether").toNumber());
+    TotalSold = rfxTokenSaleInstance.methods.totalSold();
+    App.tokensSold = TotalSold;
+    $('.tokens-sold').html(web3.fromWei(App.tokensSold, "ether").toNumber());
+    $('.tokens-available').html(App.tokensAvailable);
+    
+    var progressPercent = (Math.ceil(App.tokensSold) / App.tokensAvailable) * 100;
+    $('#progress').css('width', progressPercent + '%');
 
       // Load token contract
       rfxTokenInstance = App.contracts.RFXToken;
-      return rfxTokenInstance.methods.balanceOf(App.account);
-      }).then(function(balance) {
-        $('.dapp-balance').html(web3.fromWei(balance, "ether").toNumber());
-        App.loading = false;
-        loader.hide();
-        content.show();
-      })
-    });
+      balance = rfxTokenInstance.methods.balanceOf(App.account);
+      $('.dapp-balance').html(web3.fromWei(balance, "ether").toNumber());
+      App.loading = false;
+      loader.hide();
+      content.show();
   },
 
   buyTokens: function() {
