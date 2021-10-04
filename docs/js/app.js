@@ -1,6 +1,5 @@
-//const rfxContract = new web3.eth.Contract(rfx_abi, rfxTokenAddress)
+const Web3 = require('web3')
 
-//const crowdsaleContract = new web3.eth.Contract(crowdsale_abi, crowdsaleAddress)
 App = {
   //web3Provider: null,
   contracts: {},
