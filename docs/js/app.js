@@ -68,8 +68,8 @@ App = {
     var loader  = $('#loader');
     var content = $('#content');
 
-    //loader.show();
-    //content.hide();
+    loader.hide();
+    content.show();
 
     // Load account data
     web3.eth.getCoinbase(function(err, account) {
@@ -102,8 +102,8 @@ App = {
   },
 
   buyTokens: function() {
-    $('#content').hide();
-    $('#loader').show();
+    $('#content').show();
+    $('#loader').hide();
     var numberOfTokens = $('#numberOfTokens').val();
     App.contracts.DappTokenSale.deployed().then(function(instance) {
       return instance.buyTokens(numberOfTokens, {
